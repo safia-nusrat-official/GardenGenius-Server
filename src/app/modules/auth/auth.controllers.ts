@@ -3,10 +3,14 @@ import config from '../../config';
 import sendResponse from '../../utils/sendResponse';
 import { AuthServices } from './auth.services';
 import { catchAsync } from '../../utils/catchAsync';
+import AppError from '../../errors/AppError';
 
 const signupUser = catchAsync(async (req, res) => {
-  const result = await AuthServices.signupUser(req.body);
-  const { refreshToken, accessToken } = result;
+  if (!req.file) {
+    throw new AppError(400, 'Please upload a profile photo!');
+  } 
+  const result = await AuthServices.signupUser(req.body, req.file);
+  const { refreshToken, accessToken, data } = result;
 
   res.cookie('refreshToken', refreshToken, {
     secure: config.NODE_ENV === 'production',
@@ -18,6 +22,7 @@ const signupUser = catchAsync(async (req, res) => {
     success: true,
     message: 'User registered in successfully!',
     data: {
+      data,
       accessToken,
       refreshToken,
     },

@@ -12,4 +12,16 @@ export default {
   jwt_access_expires_in: process.env.JWT_ACCESS_EXPIRES_IN,
   jwt_refresh_secret: process.env.JWT_REFRESH_SECRET,
   jwt_refresh_expires_in: process.env.JWT_REFRESH_EXPIRES_IN,
+  
+  cloudinary_cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  cloudinary_api_key: process.env.CLOUDINARY_API_KEY,
+  cloudinary_api_secret: process.env.CLOUDINARY_API_SECRET,
+  
+  admin_email: process.env.ADMIN_EMAIL,
+  admin_password: process.env.ADMIN_PASSWORD,
+  admin_profile_photo: process.env.ADMIN_PROFILE_PHOTO,
+  admin_mobile_number: process.env.ADMIN_MOBILE_NUMBER,
+  
+  sender_email: process.env.SENDER_EMAIL,
+  sender_app_password: process.env.SENDER_APP_PASS,
 };

@@ -2,9 +2,14 @@ import httpStatus from 'http-status';
 import { catchAsync } from '../../utils/catchAsync';
 import sendResponse from '../../utils/sendResponse';
 import { UserServices } from './user.services';
+import { TImageFile } from '../../interfaces/image.interface';
+import AppError from '../../errors/AppError';
 
 const createUser = catchAsync(async (req, res) => {
-  const user = await UserServices.createUserIntoDB(req.body);
+    if (!req.file) {
+    throw new AppError(400, 'Please upload a profile photo!');
+  }  
+  const user = await UserServices.createUserIntoDB(req.body, req.file as TImageFile);
 
   sendResponse(res, {
     success: true,

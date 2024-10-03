@@ -7,15 +7,22 @@ import { USER_ROLE } from '../users/user.constants';
 import { AuthControllers } from './auth.controllers';
 import { AuthValidation } from './auth.validations';
 import { UserValidation } from '../users/user.validations';
-import { UserControllers } from '../users/user.controllers';
+import { multerUpload } from '../../config/multer.config';
+import validateImageFileRequest from '../../middlewares/validateImageFileRequest';
+import { ImageFileZodSchema } from '../../validation/image.validation';
+import { parseBody } from '../../middlewares/bodyParser';
 
 const router = express.Router();
 
 router.post(
   '/signup',
+  multerUpload.single('profilePhoto'),
+  validateImageFileRequest(ImageFileZodSchema),
+  parseBody,
   validateRequest(UserValidation.createUserValidationSchema),
-  UserControllers.createUser
+  AuthControllers.signupUser
 );
+
 router.post(
   '/login',
   validateRequest(AuthValidation.loginValidationSchema),
